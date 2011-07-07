@@ -12,6 +12,9 @@
 		// Add a story to an existing project
 		public function addStory($type, $name, $desc) {
 
+			// Encode the description
+			$desc = htmlentities($desc);
+
 			// Create the new story
 			$cmd = "curl -H \"X-TrackerToken: {$this->token}\" "
 				 . "-X POST -H \"Content-type: application/xml\" "
