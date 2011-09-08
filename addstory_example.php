@@ -17,4 +17,7 @@
 	$pivotal->addTask($story->id, 'Wash the dishes');
 	$pivotal->addTask($story->id, 'Sweep the floor');
 	
+	// Add a label to the story
+	$pivotal->addLabels($story->id, 'kitchen');
+	
 ?>
