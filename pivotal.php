@@ -7,31 +7,6 @@
 		var $project;
 
 		// ---------
-		// getStory
-		// -----
-		// Get a story from an existing project
-		public function getStory($story, $project = '') {
-		
-			// If the project wasn't set, use the class project
-			if ($project == '') {
-				$project = $this->project;
-			}
-
-			// Encode the description
-			$desc = htmlentities($desc);
-
-			// Create the new story
-			$cmd = "curl -H \"X-TrackerToken: {$this->token}\" "
-				 . "-X GET http://www.pivotaltracker.com/services/v3/projects/{$project}/stories/{$story}";
-			$xml = shell_exec($cmd);
-			
-			// Return an object
-			$story = new SimpleXMLElement($xml);
-			return $story;
-	
-		}
-
-		// ---------
 		// addStory
 		// -----
 		// Add a story to an existing project
@@ -48,7 +23,7 @@
 				 . "<name>$name</name>"
 				 . "<description>$desc</description>"
 				 . "</story>\" "
-				 . "http://www.pivotaltracker.com/services/v3/projects/{$project}/stories";
+				 . "http://www.pivotaltracker.com/services/v3/projects/{$this->project}/stories";
 			$xml = shell_exec($cmd);
 			
 			// Return an object
@@ -70,6 +45,21 @@
 				 . "http://www.pivotaltracker.com/services/v3/projects/{$this->project}/stories/$story/tasks";
 			$xml = shell_exec($cmd);
 		
+		}
+
+		// ----------
+		// addLabels
+		// -----
+		// Add a label to an existing story.
+		public function addLabels($story, $labels) {
+	
+			// Create the new task
+			$cmd = "curl -H \"X-TrackerToken: {$this->token}\" "
+				 . "-X PUT -H \"Content-type: application/xml\" "
+				 . "-d \"<story><labels>$labels</labels></story>\" "
+				 . "http://www.pivotaltracker.com/services/v3/projects/{$this->project}/stories/$story";
+			$xml = shell_exec($cmd);
+	
 		}
 	
 	}
