@@ -68,6 +68,9 @@
 		// Get a list of stories from a project, optionaly filter
 		public function getStories($project, $filter = '') {
 
+			// Encode the filter
+			$filter = urlencode($filter);
+
 			// Request the stories
 			$cmd = "curl -H \"X-TrackerToken: {$this->token}\" "
 				 . "-X GET "
