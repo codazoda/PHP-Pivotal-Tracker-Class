@@ -1,11 +1,12 @@
 PHP Pivotal Tracker Class
 
 This is a simple PHP class that connects to the Pivotal 
-Tracker (pivotaltracker.com) API and lets you create a 
-story in an existing project and assign tasks to that story. 
-I wrote this because we switched to using Pivotal Tracker 
-at work and I needed a way to insert stories from web based 
-forms.
+Tracker API (pivotaltracker.com) and lets you request a
+list of stories or create a new story in an existing 
+project.  You can also add labels and assign tasks to that 
+story.  I  wrote this because we switched to using Pivotal 
+Tracker at work and I needed a way to access itfrom web 
+based forms.
 
 Documentation, should you need it, is available at the URL
 below.

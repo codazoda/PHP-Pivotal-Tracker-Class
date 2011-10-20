@@ -61,6 +61,27 @@
 			$xml = shell_exec($cmd);
 	
 		}
+		
+		// ---------
+		// getStories
+		// -----
+		// Get a list of stories from a project, optionaly filter
+		public function getStories($project, $filter = '') {
+
+			// Request the stories
+			$cmd = "curl -H \"X-TrackerToken: {$this->token}\" "
+				 . "-X GET "
+				 . "http://www.pivotaltracker.com/services/v3/projects/{$project}/stories";
+			// Add the filter, if it was specified
+			if ($filter != '') $cmd .= "?filter=$filter";
+echo $cmd;
+			$xml = shell_exec($cmd);
+			
+			// Return an object
+			$story = new SimpleXMLElement($xml);
+			return $story;
+	
+		}
 	
 	}
 
