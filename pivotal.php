@@ -84,6 +84,24 @@
 			return $story;
 	
 		}
+
+		// ---------
+		// getProjects
+		// -----
+		// Get a list of your projects
+		public function getProjects() {
+
+			// Request the projects
+			$cmd = "curl -H \"X-TrackerToken: {$this->token}\" "
+				 . "-X GET "
+				 . "http://www.pivotaltracker.com/services/v3/projects";
+			$xml = shell_exec($cmd);
+			
+			// Return an object
+			$projects = new SimpleXMLElement($xml);
+			return $projects;
+	
+		}
 	
 	}
 
