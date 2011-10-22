@@ -23,7 +23,7 @@
 				 . "<name>$name</name>"
 				 . "<description>$desc</description>"
 				 . "</story>\" "
-				 . "http://www.pivotaltracker.com/services/v3/projects/{$this->project}/stories";
+				 . "https://www.pivotaltracker.com/services/v3/projects/{$this->project}/stories";
 			$xml = shell_exec($cmd);
 			
 			// Return an object
@@ -42,7 +42,7 @@
 			$cmd = "curl -H \"X-TrackerToken: {$this->token}\" "
 				 . "-X POST -H \"Content-type: application/xml\" "
 				 . "-d \"<task><description>$desc</description></task>\" "
-				 . "http://www.pivotaltracker.com/services/v3/projects/{$this->project}/stories/$story/tasks";
+				 . "https://www.pivotaltracker.com/services/v3/projects/{$this->project}/stories/$story/tasks";
 			$xml = shell_exec($cmd);
 		
 		}
@@ -57,7 +57,7 @@
 			$cmd = "curl -H \"X-TrackerToken: {$this->token}\" "
 				 . "-X PUT -H \"Content-type: application/xml\" "
 				 . "-d \"<story><labels>$labels</labels></story>\" "
-				 . "http://www.pivotaltracker.com/services/v3/projects/{$this->project}/stories/$story";
+				 . "https://www.pivotaltracker.com/services/v3/projects/{$this->project}/stories/$story";
 			$xml = shell_exec($cmd);
 	
 		}
@@ -74,7 +74,7 @@
 			// Request the stories
 			$cmd = "curl -H \"X-TrackerToken: {$this->token}\" "
 				 . "-X GET "
-				 . "http://www.pivotaltracker.com/services/v3/projects/{$project}/stories";
+				 . "https://www.pivotaltracker.com/services/v3/projects/{$project}/stories";
 			// Add the filter, if it was specified
 			if ($filter != '') $cmd .= "?filter=$filter";
 			$xml = shell_exec($cmd);
@@ -94,13 +94,30 @@
 			// Request the projects
 			$cmd = "curl -H \"X-TrackerToken: {$this->token}\" "
 				 . "-X GET "
-				 . "http://www.pivotaltracker.com/services/v3/projects";
+				 . "https://www.pivotaltracker.com/services/v3/projects";
 			$xml = shell_exec($cmd);
 			
 			// Return an object
 			$projects = new SimpleXMLElement($xml);
 			return $projects;
 	
+		}
+		
+		// ----------
+		// getToken
+		// -----
+		public function getToken($username, $password) {
+
+			// Request the token
+			$cmd = "curl -u $username:$password "
+				 . "-X GET "
+				 . "https://www.pivotaltracker.com/services/v3/tokens/active";
+			$xml = shell_exec($cmd);
+			
+			// Return an object
+			$token = new SimpleXMLElement($xml);
+			return $token->guid;
+			
 		}
 	
 	}
