@@ -14,6 +14,11 @@
 
 			// Encode the description
 			$desc = htmlentities($desc);
+			
+			// Make the fields safe
+			$type = escapeshellcmd($type);
+			$name = escapeshellcmd($name);
+			$desc = escapeshellcmd($desc);
 
 			// Create the new story
 			$cmd = "curl -H \"X-TrackerToken: {$this->token}\" "
@@ -37,6 +42,10 @@
 		// -----
 		// Add a task to an existing story.
 		public function addTask($story, $desc) {
+
+			// Make the fields safe
+			$story = escapeshellcmd($story);
+			$desc = escapeshellcmd($desc);
 	
 			// Create the new task
 			$cmd = "curl -H \"X-TrackerToken: {$this->token}\" "
@@ -52,6 +61,10 @@
 		// -----
 		// Add a label to an existing story.
 		public function addLabels($story, $labels) {
+
+			// Make the fields safe
+			$story = escapeshellcmd($story);
+			$labels = escapeshellcmd($labels);
 	
 			// Create the new task
 			$cmd = "curl -H \"X-TrackerToken: {$this->token}\" "
@@ -71,10 +84,14 @@
 			// Encode the filter
 			$filter = urlencode($filter);
 
+			// Make the fields safe
+			$story = escapeshellcmd($filter);
+			$desc = escapeshellcmd($project);
+
 			// Request the stories
 			$cmd = "curl -H \"X-TrackerToken: {$this->token}\" "
 				 . "-X GET "
-				 . "https://www.pivotaltracker.com/services/v3/projects/{$project}/stories";
+				 . "https://www.pivotaltracker.com/services/v3/projects/$project/stories";
 			// Add the filter, if it was specified
 			if ($filter != '') $cmd .= "?filter=$filter";
 			$xml = shell_exec($cmd);
@@ -107,6 +124,10 @@
 		// getToken
 		// -----
 		public function getToken($username, $password) {
+
+			// Make the fields safe
+			$username = escapeshellcmd($username);
+			$password = escapeshellcmd($password);
 
 			// Request the token
 			$cmd = "curl -u $username:$password "
