@@ -18,7 +18,6 @@
 			// Make the fields safe
 			$type = escapeshellcmd($type);
 			$name = escapeshellcmd($name);
-			$desc = escapeshellcmd($desc);
 
 			// Create the new story
 			$cmd = "curl -H \"X-TrackerToken: {$this->token}\" "
@@ -43,9 +42,11 @@
 		// Add a task to an existing story.
 		public function addTask($story, $desc) {
 
+			// Encode the description
+			$desc = htmlentities($desc);
+
 			// Make the fields safe
 			$story = escapeshellcmd($story);
-			$desc = escapeshellcmd($desc);
 	
 			// Create the new task
 			$cmd = "curl -H \"X-TrackerToken: {$this->token}\" "
@@ -85,8 +86,8 @@
 			$filter = urlencode($filter);
 
 			// Make the fields safe
-			$story = escapeshellcmd($filter);
-			$desc = escapeshellcmd($project);
+			$filter = escapeshellcmd($filter);
+			$project = escapeshellcmd($project);
 
 			// Request the stories
 			$cmd = "curl -H \"X-TrackerToken: {$this->token}\" "
