@@ -141,6 +141,25 @@
 			return $token->guid;
 			
 		}
+
+
+		// ----------
+		// getProjectActivity
+		// -----
+		//Get Activity Feed of a project. Number of activities is 50 by default
+		public function getProjectActivity($project, $limit=50) {
+
+			// Make the fields safe
+			$project = escapeshellcmd($project);
+
+			$cmd = "curl -H \"X-TrackerToken: {$this->token}\" "
+				 . "-X GET "
+				 . "https://www.pivotaltracker.com/services/v3/projects/$project/activities?limit=$limit";
+			$xml = shell_exec($cmd);
+
+			$activity = new SimpleXMLElement($xml);			
+			return $xml;			
+		}
 	
 	}
 
