@@ -56,6 +56,26 @@
 			$xml = shell_exec($cmd);
 		
 		}
+		
+		
+		// ----------
+		// addAttachment
+		// -----
+		// Add an attachment to an existing story.
+		public function addAttachment($story, $filePath) {
+
+			// Make the fields safe
+			$story = escapeshellcmd($story);
+				
+			// Create the new attachment
+			$cmd = "curl -H \"X-TrackerToken: {$this->token}\" "
+				 . "-X POST -F Filedata=@$filePath "
+				 . "https://www.pivotaltracker.com/services/v3/projects/{$this->project}/stories/$story/attachments";
+				 
+			$xml = shell_exec($cmd);
+		
+		}
+		
 
 		// ----------
 		// addLabels
